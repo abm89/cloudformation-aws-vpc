@@ -130,41 +130,41 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Private Subnet (AZ3)
 
-  NatGateway1EIP:
-    Type: AWS::EC2::EIP
-    DependsOn: InternetGatewayAttachment
-    Properties:
-      Domain: vpc
+  #NatGateway1EIP:
+  #  Type: AWS::EC2::EIP
+  #  DependsOn: InternetGatewayAttachment
+  #  Properties:
+  #    Domain: vpc
 
-  NatGateway2EIP:
-    Type: AWS::EC2::EIP
-    DependsOn: InternetGatewayAttachment
-    Properties:
-      Domain: vpc
+  #NatGateway2EIP:
+  #  Type: AWS::EC2::EIP
+  #  DependsOn: InternetGatewayAttachment
+  #  Properties:
+  #    Domain: vpc
       
-  NatGateway3EIP:
-    Type: AWS::EC2::EIP
-    DependsOn: InternetGatewayAttachment
-    Properties:
-      Domain: vpc
+  #NatGateway3EIP:
+  #  Type: AWS::EC2::EIP
+  #  DependsOn: InternetGatewayAttachment
+  #  Properties:
+  #    Domain: vpc
 
-  NatGateway1:
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId: !GetAtt NatGateway1EIP.AllocationId
-      SubnetId: !Ref PublicSubnet1
+  #NatGateway1:
+  #  Type: AWS::EC2::NatGateway
+  #  Properties:
+  #    AllocationId: !GetAtt NatGateway1EIP.AllocationId
+  #    SubnetId: !Ref PublicSubnet1
 
-  NatGateway2:
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId: !GetAtt NatGateway2EIP.AllocationId
-      SubnetId: !Ref PublicSubnet2
+  #NatGateway2:
+  #  Type: AWS::EC2::NatGateway
+  #  Properties:
+  #    AllocationId: !GetAtt NatGateway2EIP.AllocationId
+  #    SubnetId: !Ref PublicSubnet2
 
-  NatGateway3:
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId: !GetAtt NatGateway3EIP.AllocationId
-      SubnetId: !Ref PublicSubnet3
+  #NatGateway3:
+  #  Type: AWS::EC2::NatGateway
+  #  Properties:
+  #    AllocationId: !GetAtt NatGateway3EIP.AllocationId
+  #    SubnetId: !Ref PublicSubnet3
 
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
@@ -202,12 +202,12 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Private Routes (AZ1)
 
-  DefaultPrivateRoute1:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref PrivateRouteTable1
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway1
+  #DefaultPrivateRoute1:
+  #  Type: AWS::EC2::Route
+  #  Properties:
+  #    RouteTableId: !Ref PrivateRouteTable1
+  #    DestinationCidrBlock: 0.0.0.0/0
+  #    NatGatewayId: !Ref NatGateway1
 
   PrivateSubnet1RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
@@ -223,12 +223,12 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Private Routes (AZ2)
 
-  DefaultPrivateRoute2:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref PrivateRouteTable2
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway2
+  #DefaultPrivateRoute2:
+  #  Type: AWS::EC2::Route
+  #  Properties:
+  #    RouteTableId: !Ref PrivateRouteTable2
+  #    DestinationCidrBlock: 0.0.0.0/0
+  #    NatGatewayId: !Ref NatGateway2
 
   PrivateSubnet2RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
@@ -245,12 +245,12 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Private Routes (AZ3)
 
-  DefaultPrivateRoute3:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref PrivateRouteTable3
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway3
+  #DefaultPrivateRoute3:
+  #  Type: AWS::EC2::Route
+  #  Properties:
+  #    RouteTableId: !Ref PrivateRouteTable3
+  #    DestinationCidrBlock: 0.0.0.0/0
+  #    NatGatewayId: !Ref NatGateway3
 
   PrivateSubnet3RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
@@ -306,3 +306,15 @@ Outputs:
   NoIngressSecurityGroup:
     Description: Security group with no ingress rule
     Value: !Ref NoIngressSecurityGroup
+  
+  PrivateRTB1:
+    Description: A reference to the route table for subnet 1
+    Value: !Ref PrivateRouteTable1
+  
+  PrivateRTB2:
+    Description: A reference to the route table for subnet 2
+    Value: !Ref PrivateRouteTable2
+  
+  PrivateRTB3:
+    Description: A reference to the route table for subnet 3
+    Value: !Ref PrivateRouteTable3
