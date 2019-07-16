@@ -44,12 +44,14 @@ Resources:
   VPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: !Ref VpcCIDR
+      CidrBlock: 
+        Ref: VpcCIDR
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: !Ref EnvironmentName
+          Value: 
+            Ref: EnvironmentName
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -61,15 +63,19 @@ Resources:
   InternetGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      InternetGatewayId: !Ref InternetGateway
-      VpcId: !Ref VPC
+      InternetGatewayId: 
+        Ref: InternetGateway
+      VpcId: 
+        Ref: VPC
 
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref VPC
+      VpcId: 
+        Ref: VPC
       AvailabilityZone: !Select [ 0, !GetAZs '' ]
-      CidrBlock: !Ref PublicSubnet1CIDR
+      CidrBlock:
+        Ref: PublicSubnet1CIDR
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
@@ -78,9 +84,11 @@ Resources:
   PublicSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref VPC
+      VpcId:
+        Ref: VPC
       AvailabilityZone: !Select [ 1, !GetAZs  '' ]
-      CidrBlock: !Ref PublicSubnet2CIDR
+      CidrBlock: 
+        Ref: PublicSubnet2CIDR
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
@@ -258,6 +266,53 @@ Resources:
       RouteTableId: !Ref PrivateRouteTable3
       SubnetId: !Ref PrivateSubnet3
 
+  peeringRouteUsWest1:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref: PrivateRouteTable1
+      DestinationCidrBlock: 10.30.0.0/16
+      VpcPeeringConnectionId: pcx-07bf0149f14c0922a
+
+  peeringRouteUsWest2:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref: PrivateRouteTable2
+      DestinationCidrBlock: 10.30.0.0/16
+      VpcPeeringConnectionId: pcx-07bf0149f14c0922a
+
+  peeringRouteUsWest3:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref: PrivateRouteTable3
+      DestinationCidrBlock: 10.30.0.0/16
+      VpcPeeringConnectionId: pcx-07bf0149f14c0922a
+
+  peeringRouteEuWest1:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref:  PrivateRouteTable1
+      DestinationCidrBlock: 10.32.0.0/16
+      VpcPeeringConnectionId: pcx-00cd143b654b16314
+
+  peeringRouteEuWest2:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref:  PrivateRouteTable2
+      DestinationCidrBlock: 10.32.0.0/16
+      VpcPeeringConnectionId: pcx-00cd143b654b16314
+
+  peeringRouteEuWest3:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref:  PrivateRouteTable3
+      DestinationCidrBlock: 10.32.0.0/16
+      VpcPeeringConnectionId: pcx-00cd143b654b16314
 
   NoIngressSecurityGroup:
     Type: AWS::EC2::SecurityGroup
