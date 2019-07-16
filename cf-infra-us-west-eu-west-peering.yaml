@@ -1,0 +1,34 @@
+Description: Test CloudFormation template for VPC peering
+
+Parameters: 
+  localVPC:
+    Description: Please enter the local VPC ID
+    Type: String
+    Default: vpc-0b906cc5394f5671e
+  remoteVPC:
+    Description: Please enter the remote VPC ID
+    Type: String
+    Default: vpc-0a8566ad265b7ea8f
+  remoteVPCCIDR:
+    Description: Please enter the CIDR for the remote VPC
+    Type: String
+    Default: 10.32.0.0/16
+  remotePeerRegion:
+    Description: Please enter the remote VPC region
+    Type: String
+    Default: eu-west-1
+Resources:
+  vpcpeering:
+    Type: AWS::EC2::VPCPeeringConnection
+    Properties:
+       PeerRegion:
+         Ref: remotePeerRegion
+       VpcId:
+         Ref: localVPC
+       PeerVpcId:
+         Ref: remoteVPC
+
+Outputs:
+  PeeringConnection:
+    Description: A reference to the PCX ID
+    Value: !Ref vpcpeering
