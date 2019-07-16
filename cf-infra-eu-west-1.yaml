@@ -236,7 +236,6 @@ Resources:
       RouteTableId: !Ref PrivateRouteTable2
       SubnetId: !Ref PrivateSubnet2
 
-
   PrivateRouteTable3:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -258,6 +257,53 @@ Resources:
       RouteTableId: !Ref PrivateRouteTable3
       SubnetId: !Ref PrivateSubnet3
 
+  peeringRouteUsWest1:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref: PrivateRouteTable1
+      DestinationCidrBlock: 10.30.0.0/16
+      VpcPeeringConnectionId: pcx-0d65cb9ba2a963f0a
+
+  peeringRouteUsWest2:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref: PrivateRouteTable2
+      DestinationCidrBlock: 10.30.0.0/16
+      VpcPeeringConnectionId: pcx-0d65cb9ba2a963f0a
+
+  peeringRouteUsWest3:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref: PrivateRouteTable3
+      DestinationCidrBlock: 10.30.0.0/16
+      VpcPeeringConnectionId: pcx-0d65cb9ba2a963f0a
+
+  peeringRouteUsEast1:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref:  PrivateRouteTable1
+      DestinationCidrBlock: 10.31.0.0/16
+      VpcPeeringConnectionId: pcx-00cd143b654b16314
+
+  peeringRouteUsEast2:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref:  PrivateRouteTable2
+      DestinationCidrBlock: 10.31.0.0/16
+      VpcPeeringConnectionId: pcx-00cd143b654b16314
+
+  peeringRouteUsEast3:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+         Ref:  PrivateRouteTable3
+      DestinationCidrBlock: 10.31.0.0/16
+      VpcPeeringConnectionId: pcx-00cd143b654b16314
 
   NoIngressSecurityGroup:
     Type: AWS::EC2::SecurityGroup
